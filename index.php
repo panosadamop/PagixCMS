@@ -127,7 +127,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = 'hoosk/hoosk0';
+	$application_folder = 'pagixcms/pagix';
 
 /*
  *---------------------------------------------------------------
