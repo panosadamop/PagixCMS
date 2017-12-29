@@ -30,7 +30,7 @@
       <a class="navbar-brand" href="<?php echo BASE_URL; ?>"><img src="<?php echo BASE_URL; ?>/images/<?php echo $settings['siteLogo']; ?>" alt="<?php echo $settings['siteTitle']; ?>"></a>
       </div>
     <div class="collapse navbar-collapse">
-<?php hooskNav('header') ?>
+<?php pagixNav('header') ?>
 </div>
     </div><!-- /.container -->
 </nav><!-- /.navbar -->

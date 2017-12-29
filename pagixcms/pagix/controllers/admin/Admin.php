@@ -5,14 +5,14 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		define("HOOSK_ADMIN",1);
-		$this->load->helper(array('admincontrol', 'url', 'hoosk_admin', 'form'));
+		define("PAGIX_ADMIN",1);
+		$this->load->helper(array('admincontrol', 'url', 'pagix_admin', 'form'));
 		$this->load->library('session');
-		$this->load->model('Hoosk_model');
-		define ('LANG', $this->Hoosk_model->getLang());
+		$this->load->model('Pagix_model');
+		define ('LANG', $this->Pagix_model->getLang());
 		$this->lang->load('admin', LANG);
-		define ('SITE_NAME', $this->Hoosk_model->getSiteName());
-		define('THEME', $this->Hoosk_model->getTheme());
+		define ('SITE_NAME', $this->Pagix_model->getSiteName());
+		define('THEME', $this->Pagix_model->getTheme());
 		define ('THEME_FOLDER', BASE_URL.'/theme/'.THEME);
 	}
 
@@ -20,14 +20,14 @@ class Admin extends CI_Controller {
 	{
 		Admincontrol_helper::is_logged_in($this->session->userdata('userName'));
 		$this->data['current'] = $this->uri->segment(2);
-		$this->data['recenltyUpdated'] = $this->Hoosk_model->getUpdatedPages();
+		$this->data['recenltyUpdated'] = $this->Pagix_model->getUpdatedPages();
 		if(RSS_FEED) {
             $this->load->library('rssparser');
             $this->rssparser->set_feed_url('http://hoosk.org/feed/rss');
             $this->rssparser->set_cache_life(30);
             $this->data['hooskFeed'] = $this->rssparser->getFeed(3);
         }
-		$this->data['maintenaceActive'] = $this->Hoosk_model->checkMaintenance();
+		$this->data['maintenaceActive'] = $this->Pagix_model->checkMaintenance();
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
 		$this->load->view('admin/home', $this->data);
@@ -66,7 +66,7 @@ class Admin extends CI_Controller {
  	{
 		$username=$this->input->post('username');
 		$password=md5($this->input->post('password').SALT);
-		$result=$this->Hoosk_model->login($username,$password);
+		$result=$this->Pagix_model->login($username,$password);
 		if($result) {
 			redirect(BASE_URL.'/admin', 'refresh');
 		}
@@ -79,7 +79,7 @@ class Admin extends CI_Controller {
 	function ajaxLogin(){
 		$username=$this->input->post('username');
 		$password=md5($this->input->post('password').SALT);
-		$result=$this->Hoosk_model->login($username,$password);
+		$result=$this->Pagix_model->login($username,$password);
 		if($result) {
 			echo 1;
 		}
@@ -108,7 +108,7 @@ class Admin extends CI_Controller {
 		$this->data['themesdir'] = directory_map($_SERVER["DOCUMENT_ROOT"].'/theme/', 1);
 		$this->data['langdir'] = directory_map(APPPATH.'/language/', 1);
 
-		$this->data['settings'] = $this->Hoosk_model->getSettings();
+		$this->data['settings'] = $this->Pagix_model->getSettings();
 		$this->data['current'] = $this->uri->segment(2);
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -126,7 +126,7 @@ class Admin extends CI_Controller {
 		if ($this->input->post('siteFavicon') != ""){
 			rename($path_upload . $this->input->post('siteFavicon'), $path_images . $this->input->post('siteFavicon'));
 		}
-		$this->Hoosk_model->updateSettings();
+		$this->Pagix_model->updateSettings();
 		redirect(BASE_URL.'/admin', 'refresh');
 	}
 
@@ -155,7 +155,7 @@ class Admin extends CI_Controller {
 		Admincontrol_helper::is_logged_in($this->session->userdata('userName'));
 
 
-		$this->data['social'] = $this->Hoosk_model->getSocial();
+		$this->data['social'] = $this->Pagix_model->getSocial();
 		$this->data['current'] = $this->uri->segment(2);
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -165,7 +165,7 @@ class Admin extends CI_Controller {
 	public function updateSocial()
 	{
 		Admincontrol_helper::is_logged_in($this->session->userdata('userName'));
-		$this->Hoosk_model->updateSocial();
+		$this->Pagix_model->updateSocial();
 		redirect(BASE_URL.'/admin', 'refresh');
 	}
 

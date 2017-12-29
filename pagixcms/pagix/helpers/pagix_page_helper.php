@@ -12,11 +12,11 @@
 	}
 	 
 	//Get the navigation bar
-	function hooskNav($slug)
+	function pagixNav($slug)
 	{
 		$CI =& get_instance();
 		$CI->db->where('navSlug', $slug);
-		$query=$CI->db->get('hoosk_navigation');
+		$query=$CI->db->get('pagix_navigation');
 		foreach($query->result_array() as $n):
 			$totSegments = $CI->uri->total_segments();
 			if(!is_numeric($CI->uri->segment($totSegments))){
@@ -36,7 +36,7 @@
 		$CI =& get_instance();
 		$CI->db->order_by("unixStamp", "desc");
         $CI->db->where('published', 1);
-		$query=$CI->db->get('hoosk_post');
+		$query=$CI->db->get('pagix_post');
 		return $query->result_array();
 	}
 	//Get the Latest 5 news posts
@@ -46,7 +46,7 @@
 		$CI->db->order_by("unixStamp", "desc");
         $CI->db->where('published', 1);
 		$CI->db->limit(5, 0);
-		$query=$CI->db->get('hoosk_post');
+		$query=$CI->db->get('pagix_post');
 		$posts = '<ul class="list-group">';
 		foreach($query->result_array() as $c):
 			$posts .= '<li class="list-group-item"><a href="'.BASE_URL.'/article/'.$c['postURL'].'">'.$c['postTitle'].'</a></li>';
@@ -62,7 +62,7 @@
 		$CI->db->order_by("unixStamp", "desc");
         $CI->db->where('published', 1);
         $CI->db->limit($limit, $offset);
-		$query=$CI->db->get('hoosk_post');
+		$query=$CI->db->get('pagix_post');
 		$posts = '';
 		foreach($query->result_array() as $c):
 			$date = new DateTime($c['datePosted']);
@@ -89,12 +89,12 @@
 	{
 		$CI =& get_instance();
 		$CI->db->order_by("categoryTitle", "asc");
-		$query=$CI->db->get('hoosk_post_category');
+		$query=$CI->db->get('pagix_post_category');
 		$categories = '<ul class="list-group">';
 		foreach($query->result_array() as $c):
 			$CI->db->where('categoryID', $c['categoryID']);
             $CI->db->where('published', 1);
-            $CI->db->from('hoosk_post');
+            $CI->db->from('pagix_post');
 			$query = $CI->db->get();
 			$totPosts = $query->num_rows();
 			if ($totPosts > 0){
@@ -109,7 +109,7 @@
 	function countPosts($limit=10,$offset=0)
 	{
 		$CI =& get_instance();
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
         $CI->db->where('published', 1);
         $query = $CI->db->get();
 		$totPosts = $query->num_rows();
@@ -124,7 +124,7 @@
 	function countCategoryPosts($categoryID, $limit=10,$offset=0)
 	{
 		$CI =& get_instance();
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
 		$CI->db->where('categoryID', $categoryID);
         $CI->db->where('published', 1);
 		$query = $CI->db->get();
@@ -148,7 +148,7 @@
 			}
 			$i++;
 		}
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
         $CI->db->where('categoryID', $categoryID);
         $CI->db->where('published', 1);
 		$query = $CI->db->get();
@@ -177,7 +177,7 @@
 			}
 			$i++;
 		}
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
         $CI->db->where('published', 1);
 		$CI->db->where('categoryID', $categoryID);
 		$query = $CI->db->get();
@@ -207,7 +207,7 @@
 			$i++;
 		}
         $CI->db->where('published', 1);
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
 		$query = $CI->db->get();
 		$totPosts = $query->num_rows();
 		$showing = $offset+$limit;
@@ -235,7 +235,7 @@
 			$i++;
 		}
         $CI->db->where('published', 1);
-		$CI->db->from('hoosk_post');
+		$CI->db->from('pagix_post');
 		$query = $CI->db->get();
 		$totPosts = $query->num_rows();
 		$showing = $offset+$limit;
@@ -258,7 +258,7 @@
 		$CI->db->limit($limit, $offset);
 		$CI->db->where('categoryID', $categoryID);
         $CI->db->where('published', 1);
-		$query=$CI->db->get('hoosk_post');
+		$query=$CI->db->get('pagix_post');
 		$posts = '';
 		foreach($query->result_array() as $c):
 			$date = new DateTime($c['datePosted']);
@@ -287,7 +287,7 @@
 		$CI =& get_instance();
 		$CI->db->order_by("slideOrder", "asc");
 		$CI->db->where("pageID", $id);
-		$query=$CI->db->get('hoosk_banner');
+		$query=$CI->db->get('pagix_banner');
 		$carousel = '<ol class="carousel-indicators">'."\r\n";
 		$s = 0;
 		foreach($query->result_array() as $c):
@@ -333,7 +333,7 @@
 	{
 		$CI =& get_instance();
 		$CI->db->where("socialEnabled", 1);
-		$query=$CI->db->get('hoosk_social');
+		$query=$CI->db->get('pagix_social');
 		$social = '';
 		foreach($query->result_array() as $c):
 			$social .= '<a href="'.$c['socialLink'].'" target="_blank"><span class="socicon socicon-'.$c['socialName'].'"></span></a>';

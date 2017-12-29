@@ -5,16 +5,16 @@ class Categories extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		define("HOOSK_ADMIN",1);
-		$this->load->model('Hoosk_model');
+		define("PAGIX_ADMIN",1);
+		$this->load->model('Pagix_model');
 		$this->load->helper(array('admincontrol', 'url', 'file', 'form'));
 		$this->load->library('session');
-		define ('LANG', $this->Hoosk_model->getLang());
+		define ('LANG', $this->Pagix_model->getLang());
 		$this->lang->load('admin', LANG);
 		//Define what page we are on for nav
 		$this->data['current'] = $this->uri->segment(2);
-		define ('SITE_NAME', $this->Hoosk_model->getSiteName());
-		define('THEME', $this->Hoosk_model->getTheme());
+		define ('SITE_NAME', $this->Pagix_model->getSiteName());
+		define('THEME', $this->Pagix_model->getTheme());
 		define ('THEME_FOLDER', BASE_URL.'/theme/'.THEME);
 		//check session exists
 		Admincontrol_helper::is_logged_in($this->session->userdata('userName'));
@@ -25,13 +25,13 @@ class Categories extends CI_Controller {
 		$this->load->library('pagination');
     $result_per_page =15;  // the number of result per page
     $config['base_url'] = BASE_URL. '/admin/posts/categories/';
-    $config['total_rows'] = $this->Hoosk_model->countCategories();
+    $config['total_rows'] = $this->Pagix_model->countCategories();
 		$config['uri_segment'] = 4;
     $config['per_page'] = $result_per_page;
 		
     $this->pagination->initialize($config);
 		//Get categorys from database
-		$this->data['categories'] = $this->Hoosk_model->getCategoriesAll($result_per_page, $this->uri->segment(4));
+		$this->data['categories'] = $this->Pagix_model->getCategoriesAll($result_per_page, $this->uri->segment(4));
 		//Load the view
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -51,7 +51,7 @@ class Categories extends CI_Controller {
 		//Load the form validation library
 		$this->load->library('form_validation');
 		//Set validation rules
-		$this->form_validation->set_rules('categorySlug', 'category slug', 'trim|alpha_dash|required|is_unique[hoosk_post_category.categorySlug]');
+		$this->form_validation->set_rules('categorySlug', 'category slug', 'trim|alpha_dash|required|is_unique[pagix_post_category.categorySlug]');
 		$this->form_validation->set_rules('categoryTitle', 'category title', 'trim|required');
 
 		if($this->form_validation->run() == FALSE) {
@@ -60,7 +60,7 @@ class Categories extends CI_Controller {
 		}  else  {
 			//Validation passed
 			//Add the category
-			$this->Hoosk_model->createCategory();
+			$this->Pagix_model->createCategory();
 			//Return to category list
 			redirect(BASE_URL.'/admin/posts/categories', 'refresh');
 	  	}
@@ -69,7 +69,7 @@ class Categories extends CI_Controller {
 	public function editCategory()
 	{
 		//Get category details from database
-		$this->data['category'] = $this->Hoosk_model->getCategory($this->uri->segment(5));
+		$this->data['category'] = $this->Pagix_model->getCategory($this->uri->segment(5));
 		//Load the view
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -81,7 +81,7 @@ class Categories extends CI_Controller {
 		//Load the form validation library
 		$this->load->library('form_validation');
 		//Set validation rules
-		$this->form_validation->set_rules('categorySlug', 'category slug', 'trim|alpha_dash|required|is_unique[hoosk_post_category.categorySlug.categoryID.'.$this->uri->segment(5).']');
+		$this->form_validation->set_rules('categorySlug', 'category slug', 'trim|alpha_dash|required|is_unique[pagix_post_category.categorySlug.categoryID.'.$this->uri->segment(5).']');
 		$this->form_validation->set_rules('categoryTitle', 'category title', 'trim|required');
 
 		if($this->form_validation->run() == FALSE) {
@@ -90,7 +90,7 @@ class Categories extends CI_Controller {
 		}  else  {
 			//Validation passed
 			//Update the category
-			$this->Hoosk_model->updateCategory($this->uri->segment(5));
+			$this->Pagix_model->updateCategory($this->uri->segment(5));
 			//Return to category list
 			redirect(BASE_URL.'/admin/posts/categories', 'refresh');
 	  	}
@@ -102,10 +102,10 @@ class Categories extends CI_Controller {
 	function delete()
 	{
 		if($this->input->post('deleteid')):
-			$this->Hoosk_model->removeCategory($this->input->post('deleteid'));
+			$this->Pagix_model->removeCategory($this->input->post('deleteid'));
 			redirect(BASE_URL.'/admin/posts/categories');
 		else:
-			$this->data['form']=$this->Hoosk_model->getCategory($this->uri->segment(5));
+			$this->data['form']=$this->Pagix_model->getCategory($this->uri->segment(5));
 			$this->load->view('admin/post_category_delete.php', $this->data );
 		endif;
 	}

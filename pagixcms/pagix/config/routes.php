@@ -105,11 +105,11 @@ $route['admin/posts/(:any)'] = "admin/posts";
 $route['admin/ajax/post-search'] = "admin/posts/postSearch";
 $route['admin/ajax/page-search'] = "admin/pages/pageSearch";
 
-$route['category/(:any)'] = "hoosk_default/category";
-$route['category/(:any)/(:any)'] = "hoosk_default/category";
-$route['article/(:any)'] = "hoosk_default/article";
-$route['feed/(:any)'] = "hoosk_default/feed";
-$route['(.+)'] = "hoosk_default";
-$route['default_controller'] = "hoosk_default";
+$route['category/(:any)'] = "pagix_default/category";
+$route['category/(:any)/(:any)'] = "pagix_default/category";
+$route['article/(:any)'] = "pagix_default/article";
+$route['feed/(:any)'] = "pagix_default/feed";
+$route['(.+)'] = "pagix_default";
+$route['default_controller'] = "pagix_default";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

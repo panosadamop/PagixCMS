@@ -21,7 +21,7 @@
 	$mysql_password = $_POST['dbPass'];
 	$mysql_database = $_POST['dbName'];
 	// Name of the file
-$filename = 'hoosk.sql';
+$filename = 'initdb.sql';
 
 
 // Connect to MySQL server
@@ -60,7 +60,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE hoosk_settings SET siteTitle='".$_POST['siteName']."' WHERE siteID=0";
+$sql = "UPDATE pagix_settings SET siteTitle='".$_POST['siteName']."' WHERE siteID=0";
 
 if ($conn->query($sql) === TRUE) {
    } else {
@@ -74,7 +74,7 @@ $conn->close();
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Install Hoosk</title>
+<title>Install PagixCMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -110,7 +110,7 @@ $conn->close();
     <!-- FOOTER
     =================================-->
     <div class="container">
-     <p>&copy; Hoosk 2017</p>
+     <p>&copy; PagixCMS 2017</p>
     </div>
 	<!-- /FOOTER ============-->
 
@@ -124,7 +124,7 @@ $conn->close();
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Install Hoosk</title>
+<title>Install PagixCMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -146,7 +146,7 @@ $conn->close();
       <div class="row">
         <div class="col col-lg-12 col-sm-12">
         <img src="images/large_logo.png" />
-        <h1>Install Hoosk.</h1>
+        <h1>Install PagixCMS.</h1>
 
         </div>
       </div>
@@ -210,7 +210,7 @@ $conn->close();
     <!-- FOOTER
     =================================-->
     <div class="container">
-     <p>&copy; Hoosk 2017</p>
+     <p>&copy; PagixCMS 2017</p>
     </div>
 	<!-- /FOOTER ============-->
 

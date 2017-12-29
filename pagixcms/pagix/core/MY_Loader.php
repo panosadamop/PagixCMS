@@ -62,7 +62,7 @@ class MY_Loader extends CI_Loader {
 			}
 		}
 
-		if(!defined('HOOSK_ADMIN')):
+		if(!defined('PAGIX_ADMIN')):
 				$_ci_path = 'theme/'.THEME.'/'.$_ci_file;
 		endif;
 		##########################################################################################

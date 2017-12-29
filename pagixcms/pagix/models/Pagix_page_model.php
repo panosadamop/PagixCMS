@@ -1,6 +1,6 @@
 <?php
 
-class Hoosk_page_model extends CI_Model {
+class Pagix_page_model extends CI_Model {
 
     function __construct() {
         // Call the Model constructor
@@ -16,7 +16,7 @@ class Hoosk_page_model extends CI_Model {
         // Get Theme
         $this->db->select("*");
        	$this->db->where("siteID", 0);
-		$query = $this->db->get('hoosk_settings');
+		$query = $this->db->get('pagix_settings');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 
@@ -30,7 +30,7 @@ class Hoosk_page_model extends CI_Model {
         // Get Theme
         $this->db->select("*");
        	$this->db->where("siteID", 0);
-		$query = $this->db->get('hoosk_settings');
+		$query = $this->db->get('pagix_settings');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 
@@ -43,11 +43,11 @@ class Hoosk_page_model extends CI_Model {
     function getPage($pageURL) {
         // Get page
         $this->db->select("*");
-        $this->db->join('hoosk_page_content', 'hoosk_page_content.pageID = hoosk_page_attributes.pageID');
-        $this->db->join('hoosk_page_meta', 'hoosk_page_meta.pageID = hoosk_page_attributes.pageID');
+        $this->db->join('pagix_page_content', 'pagix_page_content.pageID = pagix_page_attributes.pageID');
+        $this->db->join('pagix_page_meta', 'pagix_page_meta.pageID = pagix_page_attributes.pageID');
 		$this->db->where("pagePublished", 1);
 		$this->db->where("pageURL", $pageURL);
-        $query = $this->db->get('hoosk_page_attributes');
+        $query = $this->db->get('pagix_page_attributes');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 
@@ -72,7 +72,7 @@ class Hoosk_page_model extends CI_Model {
         // Get category
         $this->db->select("*");
 		$this->db->where("categorySlug", $catSlug);
-        $query = $this->db->get('hoosk_post_category');
+        $query = $this->db->get('pagix_post_category');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 
@@ -95,8 +95,8 @@ class Hoosk_page_model extends CI_Model {
         $this->db->select("*");
 		$this->db->where("postURL", $postURL);
         $this->db->where("published", 1);
-        $this->db->join('hoosk_post_category', 'hoosk_post_category.categoryID = hoosk_post.categoryID');
-        $query = $this->db->get('hoosk_post');
+        $this->db->join('pagix_post_category', 'pagix_post_category.categoryID = pagix_post.categoryID');
+        $query = $this->db->get('pagix_post');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 
@@ -123,7 +123,7 @@ class Hoosk_page_model extends CI_Model {
         // Get settings
         $this->db->select("*");
 		$this->db->where("siteID", 0);
-        $query = $this->db->get('hoosk_settings');
+        $query = $this->db->get('pagix_settings');
         if ($query->num_rows() > 0) {
             $results = $query->result_array();
         	foreach ($results as $u): 

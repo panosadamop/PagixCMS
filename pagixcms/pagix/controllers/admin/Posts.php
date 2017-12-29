@@ -5,16 +5,16 @@ class Posts extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		define("HOOSK_ADMIN",1);
-		$this->load->model('Hoosk_model');
-		$this->load->helper(array('admincontrol', 'url', 'hoosk_admin', 'file', 'form'));
+		define("PAGIX_ADMIN",1);
+		$this->load->model('Pagix_model');
+		$this->load->helper(array('admincontrol', 'url', 'pagix_admin', 'file', 'form'));
 		$this->load->library('session');
-		define ('LANG', $this->Hoosk_model->getLang());
+		define ('LANG', $this->Pagix_model->getLang());
 		$this->lang->load('admin', LANG);
 		//Define what page we are on for nav
 		$this->data['current'] = $this->uri->segment(2);
-		define ('SITE_NAME', $this->Hoosk_model->getSiteName());
-		define('THEME', $this->Hoosk_model->getTheme());
+		define ('SITE_NAME', $this->Pagix_model->getSiteName());
+		define('THEME', $this->Pagix_model->getTheme());
 		define ('THEME_FOLDER', BASE_URL.'/theme/'.THEME);
 		//check session exists
 		Admincontrol_helper::is_logged_in($this->session->userdata('userName'));
@@ -26,13 +26,13 @@ class Posts extends CI_Controller {
 		$this->load->library('pagination');
     $result_per_page =15;  // the number of result per page
     $config['base_url'] = BASE_URL. '/admin/posts/';
-    $config['total_rows'] = $this->Hoosk_model->countPosts();
+    $config['total_rows'] = $this->Pagix_model->countPosts();
     $config['per_page'] = $result_per_page;
 
     $this->pagination->initialize($config);
 
 		//Get posts from database
-		$this->data['posts'] = $this->Hoosk_model->getPosts($result_per_page, $this->uri->segment(3));
+		$this->data['posts'] = $this->Pagix_model->getPosts($result_per_page, $this->uri->segment(3));
 		//Load the view
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -41,7 +41,7 @@ class Posts extends CI_Controller {
 
 	public function addPost()
 	{
-		$this->data['categories'] = $this->Hoosk_model->getCategories();
+		$this->data['categories'] = $this->Pagix_model->getCategories();
 		//Load the view
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -53,7 +53,7 @@ class Posts extends CI_Controller {
 		//Load the form validation library
 		$this->load->library('form_validation');
 		//Set validation rules
-		$this->form_validation->set_rules('postURL', 'post URL', 'trim|alpha_dash|required|is_unique[hoosk_post.postURL]');
+		$this->form_validation->set_rules('postURL', 'post URL', 'trim|alpha_dash|required|is_unique[pagix_post.postURL]');
 		$this->form_validation->set_rules('postTitle', 'post title', 'trim|required');
 		$this->form_validation->set_rules('postExcerpt', 'post excerpt', 'trim|required');
 
@@ -72,7 +72,7 @@ class Posts extends CI_Controller {
 			}
 			//Add the post
 			$this->load->library('Sioen');
-			$this->Hoosk_model->createPost();
+			$this->Pagix_model->createPost();
 			//Return to post list
 			redirect(BASE_URL.'/admin/posts', 'refresh');
 	  	}
@@ -80,9 +80,9 @@ class Posts extends CI_Controller {
 
 	public function editPost()
 	{
-		$this->data['categories'] = $this->Hoosk_model->getCategories();
+		$this->data['categories'] = $this->Pagix_model->getCategories();
 		//Get post details from database
-		$this->data['posts'] = $this->Hoosk_model->getPost($this->uri->segment(4));
+		$this->data['posts'] = $this->Pagix_model->getPost($this->uri->segment(4));
 		//Load the view
 		$this->data['header'] = $this->load->view('admin/header', $this->data, true);
 		$this->data['footer'] = $this->load->view('admin/footer', '', true);
@@ -94,7 +94,7 @@ class Posts extends CI_Controller {
 		//Load the form validation library
 		$this->load->library('form_validation');
 		//Set validation rules
-		$this->form_validation->set_rules('postURL', 'post URL', 'trim|alpha_dash|required|is_unique[hoosk_post.postURL.postID.'.$this->uri->segment(4).']');
+		$this->form_validation->set_rules('postURL', 'post URL', 'trim|alpha_dash|required|is_unique[pagix_post.postURL.postID.'.$this->uri->segment(4).']');
 		$this->form_validation->set_rules('postTitle', 'post title', 'trim|required');
 
 		if($this->form_validation->run() == FALSE) {
@@ -111,7 +111,7 @@ class Posts extends CI_Controller {
 			}
 			//Update the post
 			$this->load->library('Sioen');
-			$this->Hoosk_model->updatePost($this->uri->segment(4));
+			$this->Pagix_model->updatePost($this->uri->segment(4));
 			//Return to post list
 			redirect(BASE_URL.'/admin/posts', 'refresh');
 	  	}
@@ -121,17 +121,17 @@ class Posts extends CI_Controller {
 	function delete()
 	{
 		if($this->input->post('deleteid')):
-			$this->Hoosk_model->removePost($this->input->post('deleteid'));
+			$this->Pagix_model->removePost($this->input->post('deleteid'));
 			redirect(BASE_URL.'/admin/posts');
 		else:
-			$this->data['form']=$this->Hoosk_model->getPost($this->uri->segment(4));
+			$this->data['form']=$this->Pagix_model->getPost($this->uri->segment(4));
 			$this->load->view('admin/post_delete.php', $this->data );
 		endif;
 	}
 
 	function postSearch()
 	{
-		$this->Hoosk_model->postSearch($this->input->post('term'));
+		$this->Pagix_model->postSearch($this->input->post('term'));
 	}
 	
 }
